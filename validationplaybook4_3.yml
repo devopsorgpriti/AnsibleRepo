@@ -1,0 +1,22 @@
+---
+ - hosts: group1
+   become: true
+   tasks:
+     - name: remove the Apache package
+       yum: name=httpd state=absent
+
+     - name: install httpd
+       yum: name=httpd state=present
+
+     - name: starting httpd service
+       service: name=httpd state=started enabled=yes
+
+     - name: creating index.html
+       copy: src=/var/tmp/AnsibleRepo/index.html dest=/var/www/html/
+       notify:
+         restart httpd
+
+   handlers:
+     - name: restart httpd
+       service: name=httpd state=restarted
+       
