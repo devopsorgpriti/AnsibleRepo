@@ -1,0 +1,17 @@
+---
+ - hosts: local
+
+   tasks:
+     - name: installation of httpd package
+       yum: name=httpd state=present
+       register: http_install
+
+     - name: validation of httpd
+       command: ls -al /sbin/httpd
+       register: http_validation
+
+     - name: starting httpd service
+       service: name=httpd state=started enabled=yes
+       when: http_validation|success and http_install|success
+
+

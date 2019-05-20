@@ -1,0 +1,24 @@
+---
+ - hosts: local
+   become: true
+   
+   tasks:
+     - name: "installing lamp package"
+       yum: name={{item}} state=present disable_gpg_check=yes
+       with_items:
+         - httpd
+         - php
+         - mariadb
+       register: pkg_log
+
+     - name: " httpd pkg validation"
+       command: httpd -v
+       register: httpd_validation
+       when: pkg_log|success
+
+     - name: "copying index file"
+       copy: src=index.html dest=/var/www/html/index.html
+       when: httpd_validation|success
+
+     - name: "starting httpd service"
+       service: name=httpd state=started

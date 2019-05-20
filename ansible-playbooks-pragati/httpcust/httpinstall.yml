@@ -1,0 +1,14 @@
+---
+ - hosts: group1
+   tasks:
+     - name: installing httpd
+       yum: name=httpd state=present
+       register: http_install_status
+
+     - name: copy index.html
+       copy: src=index.html dest=/var/www/html/
+       register: copy_status
+
+     - name: starting httpd service
+       service: name=httpd enabled=yes state=started
+       when: http_install_status|success and copy_status|success

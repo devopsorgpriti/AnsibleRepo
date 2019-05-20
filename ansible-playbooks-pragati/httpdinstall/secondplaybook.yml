@@ -1,0 +1,15 @@
+---
+ - hosts: local
+
+   tasks:
+     - yum name=httpd state=present
+
+     - name: installation of httpd package
+       yum: name=httpd state=present
+
+     - yum:
+         name: httpd
+         state: present
+
+
+

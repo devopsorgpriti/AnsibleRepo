@@ -1,0 +1,14 @@
+---
+ - hosts: apachegrp
+   vars:
+    http_port: 91
+   roles:
+    - apacheins
+
+
+ - hosts: dbgrp
+   vars:
+    mysql_user: user1
+    mysql_passwordL userps
+   roles:
+    - dbins

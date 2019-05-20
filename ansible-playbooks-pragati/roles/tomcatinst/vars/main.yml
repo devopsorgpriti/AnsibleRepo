@@ -1,0 +1,6 @@
+---
+# vars file for tomcatinst
+http_port: 8090
+admin_user: admin
+admin_password: admin
+

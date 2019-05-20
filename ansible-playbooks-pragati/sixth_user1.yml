@@ -1,0 +1,9 @@
+---
+ - hosts: local
+   become: true
+   vars_files:
+    - userpar.yml 
+
+   tasks:
+     - name: Creating user
+       user: name={{user_name}} password={{user_password|password_hash('sha512')}} shell=/bin/bash

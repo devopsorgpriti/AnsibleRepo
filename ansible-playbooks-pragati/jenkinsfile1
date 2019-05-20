@@ -1,0 +1,11 @@
+node{
+	stage('installation of packages')  {
+		sh label: '', script: '''echo yum install $pkginstall_confirmation $pkgName
+			          	sudo yum install $pkginstall_confirmation $pkgName
+				sudo yum list $pkgName
+				sudo yum remove $pkginstall_confirmation $pkgName'''
+	}
+}
+
+
+## Testing1

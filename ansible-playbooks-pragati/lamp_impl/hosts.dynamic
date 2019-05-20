@@ -1,0 +1,5 @@
+[apachegrp]
+{{ host1 }}
+
+[sqlgrp]
+{{ host2 }}
