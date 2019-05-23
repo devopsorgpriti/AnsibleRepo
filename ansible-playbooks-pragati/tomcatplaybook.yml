@@ -1,4 +1,0 @@
----
-- hosts: group1
-  roles:
-   - tomcatinst

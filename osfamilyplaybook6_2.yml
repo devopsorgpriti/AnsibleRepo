@@ -1,0 +1,8 @@
+---
+ - hosts: group1
+   become: true
+   tasks: 
+     - import_tasks: /var/tmp/AnsibleRepo/phpredhat.yml when:ansible_os_family=="RedHat"
+
+     - import_tasks: /var/tmp/AnsibleRepo/phpubuntu.yml when:ansible_os_family=="Ubuntu"
+

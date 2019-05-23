@@ -1,0 +1,33 @@
+---
+ - hosts: group1
+   become: true
+   tasks: 
+     - name: uninstall httpd
+       yum: name=httpd state=absent
+
+     - name: install httpd
+       yum: name=httpd state=present
+       register: httpdinstall_output
+
+     - name: validate httpd installation
+       command: ls -al /sbin/httpd
+       register: httpdval_output
+
+     - name: starting httpd service
+       service: name=httpd state=started enabled=yes
+       when: httpdinstall_output|success and httpdval_output|success
+
+     - name: remove index.html from host
+       file: path=/var/www/html/index.html state=absent
+       register: indexrm_output
+
+     - name: creating httpd service
+       copy: src=/var/tmp/AnsibleRepo/index.html dest=/var/www/html       
+       when: indexrm_output|success 
+       notify:
+         httpd_restart
+
+   handlers:
+     - name: httpd_restart
+       service: name=httpd state=started
+       

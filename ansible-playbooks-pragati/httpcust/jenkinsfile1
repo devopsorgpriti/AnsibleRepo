@@ -1,8 +1,0 @@
-node  {
-    stage('package installation'){
-        	sh label: '', script: '''echo yum install $pkginstall_confirmation $pkgName
-		                        	sudo yum install $pkginstall_confirmation $pkgName
-			                        sudo yum list $pkgName
-			                        sudo yum remove $pkginstall_confirmation $pkgName'''
-    }
-}

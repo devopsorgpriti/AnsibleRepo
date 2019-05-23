@@ -1,0 +1,14 @@
+---
+ - hosts: group1
+   become: true
+   tasks:
+     - name: php uninstall
+       yum: name=php state=absent
+
+     - name: php install ubuntu
+       apt: name=php state=installed
+
+     - name: php service start
+       service: name=php state=started
+
+

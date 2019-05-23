@@ -1,0 +1,35 @@
+---
+ - hosts: group1
+   become: true
+   tasks:
+     - name: uninstall multiple pkgs
+       yum: name={{item}} state=absent 
+       with_items:
+         - httpd
+
+         - php
+
+         - mariadb
+       register: unistall_output
+
+     - name: install multiple pkgs
+       yum: name={{item}} state=present disable_gpg_check=yes
+       with_items:
+         - httpd
+
+         - php
+
+         - mariadb
+       register: install_output
+       when: unistall_output|success
+
+     - name: starting services
+       service: name={{item}} state=started
+       with_items:
+         - httpd
+
+         - php
+
+         - mariadb
+       when: install_output|success
+     

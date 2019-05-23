@@ -1,0 +1,37 @@
+---
+ - hosts: group1
+   become: true
+   vars:
+     PkgName: "{{install_pkg}}"
+     ServiceName: "{{service_name}}"
+   tasks: 
+     - name: uninstall httpd
+       yum: name={{PkgName}} state=absent
+       
+     - name: install httpd
+       yum: name={{PkgName}} state=present
+       register: install_output
+
+     - name: validate httpd install
+       command: ls -al /sbin/httpd
+       register: validate_output
+
+     - name: start httpd service
+       service: name={{ServiceName}} state=started   
+       when: install_output|success and validate_output|success
+
+     - name: remove index.html from host
+       file: path=/var/www/html/index.html state=absent
+       register: remove_output
+
+     - name: create httpd server
+       copy: src=/var/tmp/AnsibleRepo/index.html dest=/var/www/html/
+       when: remove_output|success
+       notify:
+         httpd_restart
+
+   handlers:
+     - name: httpd_restart
+       service: name={{ServiceName}} state=restarted
+
+

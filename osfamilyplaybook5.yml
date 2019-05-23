@@ -1,0 +1,13 @@
+---
+ - hosts: group1
+   become: true
+   tasks: 
+     - name: install php for redhat
+       yum: name=php state=installed
+       when: ansible_os_family=="RedHat"
+
+     - name: install php for ubuntu
+       yum: name=php state=installed
+       when: ansible_os_family=="Ubuntu"
+
+
