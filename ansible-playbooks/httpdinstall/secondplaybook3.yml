@@ -1,0 +1,21 @@
+---
+ - hosts: local
+   become: true
+   vars:
+    - pkg: "{{pkg_name}}"
+
+   tasks:
+     - name: installation of httpd package
+       yum: name="{{item}}" state=present
+       with_items:
+        - "{{pkg}}"
+       register: pkg_install
+
+
+     - name: starting httpd service
+       service: name="{{item}}" state=started enabled=yes
+       with_items:
+        - "{{pkg}}"
+       when: pkg_install|success 
+
+ansible-playbook secondplaybook3.yml -e '{"pkg_name": [httpd, php]}'

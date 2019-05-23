@@ -1,0 +1,72 @@
+# aws --version
+aws-cli/1.11.13 Python/3.5.2 Linux/4.4.0-62-generic botocore/1.4.70
+
+# aws configure
+AWS Access Key ID [None]: AKIAJ7PU6ASDOWNOGMGQ
+AWS Secret Access Key [None]: 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
+Default region name [us-west-2]: 
+Default output format [None]: 
+aws-cli/1.11.13 Python/3.5.2 Linux/4.4.0-62-generic botocore/1.4.70
+
+# aws configure
+AWS Access Key ID [None]: AKIAJ7PU6ASDOWNOGMGQ
+AWS Secret Access Key [None]: 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
+Default region name [us-west-2]: 
+Default output format [None]: 
+# 
+
+aws ec2 describe-regions
+aws ec2 describe-regions --output table
+
+# grep -i aws ~/.bashrc 
+export AWS_CONFIG_FILE=$HOME/.aws/config
+
+
+# ansible-playbook ec2_keyupload.yml 
+
+PLAY [localhost] ***************************************************************
+
+TASK [setup] *******************************************************************
+ok: [localhost]
+
+TASK [Uploading my public key] *************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0   
+
+# aws ec2 describe-key-pairs
+{
+    "KeyPairs": [
+        {
+            "KeyFingerprint": "74:0d:ff:e8:1c:33:02:38:06:b0:a7:47:2f:c1:71:45:07:4d:e5:5d",
+            "KeyName": "server1"
+        },
+        {
+            "KeyFingerprint": "90:3e:3f:fd:2c:d7:f3:bc:ed:d9:d4:0d:7c:c1:f0:ed",
+            "KeyName": "Test-awskey"
+        }
+    ]
+}
+# 
+
+# ansible-playbook ec2instance.yml 
+
+PLAY [localhost] ***************************************************************
+
+TASK [setup] *******************************************************************
+ok: [localhost]
+
+TASK [Create security group] ***************************************************
+ok: [localhost]
+
+TASK [provision ec2 instance] **************************************************
+changed: [localhost]
+
+TASK [wait for ssh to come up] *************************************************
+ok: [localhost] => (item={u'kernel': None, u'root_device_type': u'ebs', u'private_dns_name': u'ip-172-31-26-2.us-west-2.compute.internal', u'public_ip': u'54.186.111.179', u'private_ip': u'172.31.26.2', u'id': u'i-0fa2b350048350e1e', u'ebs_optimized': False, u'state': u'running', u'virtualization_type': u'hvm', u'architecture': u'x86_64', u'ramdisk': None, u'block_device_mapping': {u'/dev/sda1': {u'status': u'attached', u'delete_on_termination': True, u'volume_id': u'vol-03464047823a6986d'}}, u'key_name': u'Test-awskey', u'image_id': u'ami-a58d0dc5', u'tenancy': u'default', u'groups': {u'sg-f5dc838d': u'suman_security_group'}, u'public_dns_name': u'ec2-54-186-111-179.us-west-2.compute.amazonaws.com', u'state_code': 16, u'tags': {u'Owner': u'suman', u'Name': u'awslabserver'}, u'placement': u'us-west-2a', u'ami_launch_index': u'0', u'dns_name': u'ec2-54-186-111-179.us-west-2.compute.amazonaws.com', u'region': u'us-west-2', u'launch_time': u'2017-03-01T12:04:17.000Z', u'instance_type': u't2.micro', u'root_device_name': u'/dev/sda1', u'hypervisor': u'xen'})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=4    changed=1    unreachable=0    failed=0   
+
+# 

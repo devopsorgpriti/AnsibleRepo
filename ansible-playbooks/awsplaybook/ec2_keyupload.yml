@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Uploading my public key
+    ec2_key:
+       name: Test-awskey
+       region: us-west-2
+       key_material: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIRS9Nprf2yO8r4++uqr6bt/hsyEhPEw6FeouJsWpVGLsG9cy9hOYocaFN9f8nzfC1GYtADJ/YeEPKLkYD+m1dJVf8Vuz9bNXDHiYcJngqZNw7piRatCmwgEKhoE/LX7MI0Wi01vslrxcxAt7o7OHqGc5gGqHnDTqosRLpgeVpx+oRerOwFUG0vSNtsCg0mLdbsd8rLU5U4IPaNXuJaoJNUbQ9SGKJoEXtiDxXql883/BJjcbpKcs6/yUcXxAKj3s3jcVEIsSYr5skMnZ66S0skLqjnHlI6mQsyNOGV4nB4QW2PLoG2w7zy4NucAkQDn1iWWgnsNVAFoeIbyS3n4hx root@compozed-ThinkCentre-M83"
+       state: present

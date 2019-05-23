@@ -1,0 +1,11 @@
+---
+ - hosts: local
+   become: true
+   
+   tasks:
+     - name: "installing apche package"
+       apt: name=apache2 state=latest
+       register: apachestatus
+
+     - name: "starting tomcat services"
+       service: name=apache2 enabled=yes state=started

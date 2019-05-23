@@ -1,0 +1,5 @@
+---
+http_port: 80
+mysql_user: user1
+mysql_passwd: userps
+

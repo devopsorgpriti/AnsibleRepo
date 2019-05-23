@@ -1,0 +1,17 @@
+---
+ - hosts: local
+
+   tasks:
+     - name: "Installing httpd package"
+       yum: name=httpd state=installed
+       register: httpd_status
+     - name: "Starting httpd service "
+       service: name=httpd enabled=yes state=started
+     - name: "Updating httpd conf"
+       lineinfile: dest=/etc/httpd/conf/httpd.conf state=present regexp="^Listen" line="Listen 8080"
+       when: httpd_status|success
+       notify: httpd_restart
+   handlers:
+      - name: "httpd_restart"
+        service: name=httpd state=restarted
+$2a$10$2k7oykdzLljKy0.q5GReFuMBI8PgjhXHqEHVEtWZGYC8gaoZR99Va
